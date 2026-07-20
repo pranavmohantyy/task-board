@@ -1,10 +1,1 @@
-const addTask = (title) => {
-    const task = document.createElement('div');
-    task.className = 'task';
-    task.textContent = title;
-    document.querySelector('.column .task-list').appendChild(task);
-};
-
-// Example usage
-addTask('New Task 1');
-addTask('New Task 2');
+const addTask = (title) => {\n    const task = document.createElement('div');\n    task.className = 'task';\n    task.textContent = title;\n    task.draggable = true;\n    task.addEventListener('dragstart', dragStart);\n    document.querySelector('.column .task-list').appendChild(task);\n};\n\nconst dragStart = (e) => {\n    e.dataTransfer.setData('text/plain', e.target.textContent);\n};\n\nconst allowDrop = (e) => {\n    e.preventDefault();\n};\n\nconst drop = (e) => {\n    e.preventDefault();\n    const title = e.dataTransfer.getData('text/plain');\n    addTask(title);\n};\n\ndocument.querySelectorAll('.column').forEach(column => {\n    column.addEventListener('dragover', allowDrop);\n    column.addEventListener('drop', drop);\n});\n\n// Example usage\naddTask('New Task 1');\naddTask('New Task 2');
