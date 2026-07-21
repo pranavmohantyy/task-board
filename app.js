@@ -1,3 +1,10 @@
+const boards = {
+    board1: [],
+    board2: []
+};
+
+let currentBoard = 'board1';
+
 const addTask = (title, priority = 'low', dueDate = 'N/A') => {
     const task = document.createElement('div');
     task.className = 'task';
@@ -7,33 +14,20 @@ const addTask = (title, priority = 'low', dueDate = 'N/A') => {
     }
     task.draggable = true;
     task.addEventListener('dragstart', handleDragStart);
-    document.querySelector('.task-list').appendChild(task);
-    updateTaskCount();
+    document.querySelector(`.${currentBoard} .task-list`).appendChild(task);
+    boards[currentBoard].push({ title, priority, dueDate });
 };
 
-const openNewTaskModal = () => {
-    document.getElementById('new-task-modal').style.display = 'block';
+const switchBoard = () => {
+    const selectedBoard = document.getElementById('board-select').value;
+    currentBoard = selectedBoard;
+    renderBoard();
 };
 
-const closeNewTaskModal = () => {
-    document.getElementById('new-task-modal').style.display = 'none';
+document.getElementById('board-select').addEventListener('change', switchBoard);
+
+const renderBoard = () => {
+    const taskList = document.querySelector(`.${currentBoard} .task-list`);
+    taskList.innerHTML = '';
+    boards[currentBoard].forEach(taskData => addTask(taskData.title, taskData.priority, taskData.dueDate));
 };
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'n') {
-        openNewTaskModal();
-    }
-});
-
-document.querySelector('.close-btn').addEventListener('click', closeNewTaskModal);
-
-document.getElementById('add-task-btn').addEventListener('click', () => {
-    const title = document.getElementById('task-title').value;
-    const dueDate = document.getElementById('due-date').value;
-    if (title) {
-        addTask(title, 'low', dueDate);
-        closeNewTaskModal();
-        document.getElementById('task-title').value = '';
-        document.getElementById('due-date').value = '';
-    }
-});
