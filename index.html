@@ -13,8 +13,18 @@
         <div class="column">
             <div class="header">To Do <span class="badge" id="todo-count">0</span></div>
             <div class="task-list">
-                <div class="task" draggable="true">Sample Task 1 <span class="priority" data-priority="low"><span class="dot low"></span></span> <span class="due-date" contenteditable='true'>Due: N/A</span> <button class="delete-btn">X</button></div>
+                <div class="task" draggable="true">Sample Task 1 <span class="priority" data-priority="low"><span class="dot low"></span></span> <span class="due-date">Due: N/A</span> <button class="delete-btn">X</button></div>
             </div>
+        </div>
+        <!-- Additional columns here -->
+    </div>
+    <div id="new-task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>New Task</h2>
+            <input type="text" id="task-title" placeholder="Task Title" />
+            <input type="date" id="due-date" />
+            <button id="add-task-btn">Add Task</button>
         </div>
     </div>
     <script src="app.js"></script>
